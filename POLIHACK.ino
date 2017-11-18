@@ -8,6 +8,8 @@
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
 
+char checkByte;
+
 // Pass our oneWire reference to Dallas Temperature. 
 DallasTemperature sensors(&oneWire);
 
@@ -42,17 +44,20 @@ void loop(void)
     Serial.print("Temperature for the device 2 (index 1) is: ");
     Serial.println(sensors.getTempCByIndex(1)); */
     for(int i = 0; i < 2; i++){
+      while(Serial.available()==0);
+      checkByte = Serial.read();
+      Serial.read();
       if(i < 10)
         Serial.print("00");
-      else if(i < 99)
+      else if(i >= 10 && i < 99)
         Serial.print('0');
       Serial.print(i);
       Serial.print(' ');
       Serial.print(sensors.getTempCByIndex(i));
       Serial.print('\n');
       //Serial.print(" *#\n");
+    delay(10);     
     }
-    delay(5000);     
   //}
   //else
     //Serial.println("Sensor not connected!");
