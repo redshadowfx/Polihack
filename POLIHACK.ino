@@ -18,7 +18,7 @@ void setup(void)
 {
   // start serial port
   Serial.begin(9600);
-  Serial.println("Dallas Temperature IC Control Library Demo");
+  //Serial.println("Dallas Temperature IC Control Library Demo");
 
   // Start up the library
   sensors.begin();
@@ -32,16 +32,27 @@ void loop(void)
   //if(sensors.isConnected(0)){
     // call sensors.requestTemperatures() to issue a global temperature 
     // request to all devices on the bus
-    Serial.print("Requesting temperatures...");
+    //Serial.print("Requesting temperatures...");
     sensors.requestTemperatures(); // Send the command to get temperatures
-    Serial.println("DONE");
+    //Serial.println("DONE");
     // After we got the temperatures, we can print them here.
     // We use the function ByIndex, and as an example get the temperature from the first sensor only.
-    Serial.print("Temperature for the device 1 (index 0) is: ");
+    /*Serial.print("Temperature for the device 1 (index 0) is: ");
     Serial.println(sensors.getTempCByIndex(0));
     Serial.print("Temperature for the device 2 (index 1) is: ");
-    Serial.println(sensors.getTempCByIndex(1)); 
-    delay(500);     
+    Serial.println(sensors.getTempCByIndex(1)); */
+    for(int i = 0; i < 2; i++){
+      if(i < 10)
+        Serial.print("00");
+      else if(i < 99)
+        Serial.print('0');
+      Serial.print(i);
+      Serial.print(' ');
+      Serial.print(sensors.getTempCByIndex(i));
+      Serial.print('\n');
+      //Serial.print(" *#\n");
+    }
+    delay(5000);     
   //}
   //else
     //Serial.println("Sensor not connected!");
